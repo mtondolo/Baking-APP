@@ -1,6 +1,8 @@
 package com.example.bakingapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -15,7 +17,8 @@ import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView mRecipeListTextView;
+    private RecyclerView mRecyclerView;
+    private RecipeAdapter mRecipeAdapter;
     private TextView mErrorMessageDisplay;
     private ProgressBar mLoadingIndicator;
 
@@ -24,14 +27,28 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Using findViewById, we get a reference to our TextView from xml.
-        mRecipeListTextView = (TextView) findViewById(R.id.tv_recipes);
+        // Using findViewById, we get a reference to our RecyclerView from xml.
+        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerview_policy);
 
         // This TextView is used to display errors and will be hidden if there are no errors
         mErrorMessageDisplay = (TextView) findViewById(R.id.tv_error_message_display);
 
         // The ProgressBar that will indicate to the user that we are loading data.
         mLoadingIndicator = (ProgressBar) findViewById(R.id.pb_loading_indicator);
+
+        // LinearLayoutManager can support HORIZONTAL or VERTICAL orientations.
+        LinearLayoutManager layoutManager
+                = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        mRecyclerView.setLayoutManager(layoutManager);
+
+        // Use setHasFixedSize(true) on mRecyclerView to designate that all items in the list will have the same size.
+        mRecyclerView.setHasFixedSize(true);
+
+        // The NewsAdapter is responsible for linking our news data with the Views that will end up displaying our recipe data.
+        mRecipeAdapter = new RecipeAdapter();
+
+        // Use mRecyclerView.setAdapter and pass in mNewsAdapter.
+        mRecyclerView.setAdapter(mRecipeAdapter);
 
         /* Once all of our views are setup, we can load the recipe data. */
         loadRecipeData();
@@ -44,12 +61,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void showRecipeDataView() {
         mErrorMessageDisplay.setVisibility(View.INVISIBLE);
-        mRecipeListTextView.setVisibility(View.VISIBLE);
+        mRecyclerView.setVisibility(View.VISIBLE);
     }
 
     // his method will make the error message visible and hide the recipe View.
     private void showErrorMessage() {
-        mRecipeListTextView.setVisibility(View.INVISIBLE);
+        mRecyclerView.setVisibility(View.INVISIBLE);
         mErrorMessageDisplay.setVisibility(View.VISIBLE);
     }
 
@@ -83,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
                 // Iterate through the array and append the Strings to the TextView.
                 for (String recipeString : recipeData) {
                     showRecipeDataView();
-                    mRecipeListTextView.append((recipeString) + "\n\n\n");
+                    mRecipeAdapter.setRecipeData(recipeData);
                 }
             } else {
                 showErrorMessage();
