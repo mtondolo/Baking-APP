@@ -12,6 +12,19 @@ import androidx.recyclerview.widget.RecyclerView;
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder> {
     private String[] mRecipeData;
 
+    // An on-click handler that we've defined to make it easy for an Activity to interface with our RecyclerView
+    private final RecipeAdapterOnClickHandler mClickHandler;
+
+    // The interface that receives onClick messages
+    public interface RecipeAdapterOnClickHandler {
+        void onClick(String latestNewsItem);
+    }
+
+    // Creates a RecipeAdapter
+    public RecipeAdapter(RecipeAdapterOnClickHandler clickHandler) {
+        mClickHandler = clickHandler;
+    }
+
     // This gets called when each new ViewHolder is created.
     @NonNull
     @Override
@@ -43,13 +56,21 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     }
 
     // Cache of the children views for a recipe list item.
-    public class RecipeViewHolder extends RecyclerView.ViewHolder {
+    public class RecipeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public final TextView mRecipeTextView;
 
         public RecipeViewHolder(@NonNull View itemView) {
             super(itemView);
             mRecipeTextView = itemView.findViewById(R.id.tv_recipes);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            int adapterPosition = getAdapterPosition();
+            String recipe = mRecipeData[adapterPosition];
+            mClickHandler.onClick(recipe);
         }
     }
 

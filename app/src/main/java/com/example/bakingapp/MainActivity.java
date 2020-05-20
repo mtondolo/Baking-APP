@@ -4,18 +4,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.bakingapp.utils.NetworkUtils;
 import com.example.bakingapp.utils.RecipeJsonUtils;
 
 import java.net.URL;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements RecipeAdapter.RecipeAdapterOnClickHandler {
 
     private RecyclerView mRecyclerView;
     private RecipeAdapter mRecipeAdapter;
@@ -45,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setHasFixedSize(true);
 
         // The NewsAdapter is responsible for linking our news data with the Views that will end up displaying our recipe data.
-        mRecipeAdapter = new RecipeAdapter();
+        mRecipeAdapter = new RecipeAdapter(this);
 
         // Use mRecyclerView.setAdapter and pass in mNewsAdapter.
         mRecyclerView.setAdapter(mRecipeAdapter);
@@ -68,6 +70,14 @@ public class MainActivity extends AppCompatActivity {
     private void showErrorMessage() {
         mRecyclerView.setVisibility(View.INVISIBLE);
         mErrorMessageDisplay.setVisibility(View.VISIBLE);
+    }
+
+    // This method handles RecyclerView item clicks.
+    @Override
+    public void onClick(String recipe) {
+        Context context = this;
+        Toast.makeText(context, recipe, Toast.LENGTH_SHORT)
+                .show();
     }
 
     public class FetchRecipeTask extends AsyncTask<String, Void, String[]> {
