@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -76,8 +77,9 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
     @Override
     public void onClick(String recipe) {
         Context context = this;
-        Toast.makeText(context, recipe, Toast.LENGTH_SHORT)
-                .show();
+        Class destinationActivity = RecipeDetailActivity.class;
+        Intent intent = new Intent(context, destinationActivity);
+        startActivity(intent);
     }
 
     public class FetchRecipeTask extends AsyncTask<String, Void, String[]> {
