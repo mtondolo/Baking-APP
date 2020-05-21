@@ -78,8 +78,9 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
     public void onClick(String recipe) {
         Context context = this;
         Class destinationActivity = RecipeDetailActivity.class;
-        Intent intent = new Intent(context, destinationActivity);
-        startActivity(intent);
+        Intent intentToStartDetailActivity = new Intent(context, destinationActivity);
+        intentToStartDetailActivity.putExtra ( intentToStartDetailActivity.EXTRA_TEXT,recipe);
+        startActivity(intentToStartDetailActivity);
     }
 
     public class FetchRecipeTask extends AsyncTask<String, Void, String[]> {
