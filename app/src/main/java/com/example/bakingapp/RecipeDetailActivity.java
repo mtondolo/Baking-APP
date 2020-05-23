@@ -2,8 +2,10 @@ package com.example.bakingapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 public class RecipeDetailActivity extends AppCompatActivity {
@@ -24,5 +26,15 @@ public class RecipeDetailActivity extends AppCompatActivity {
             mRecipe = intentThatStartedThisActivity.getStringExtra(intentThatStartedThisActivity.EXTRA_TEXT);
             mRecipeDisplay.setText(mRecipe);
         }
+
+        mRecipeDisplay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Context context = RecipeDetailActivity.this;
+                Class destinationActivity = RecipeVideoActivity.class;
+                Intent intent = new Intent(context, destinationActivity);
+                startActivity(intent);
+            }
+        });
     }
 }
