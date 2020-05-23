@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
         Context context = this;
         Class destinationActivity = RecipeDetailActivity.class;
         Intent intentToStartDetailActivity = new Intent(context, destinationActivity);
-        intentToStartDetailActivity.putExtra ( intentToStartDetailActivity.EXTRA_TEXT,recipe);
+        intentToStartDetailActivity.putExtra(intentToStartDetailActivity.EXTRA_TEXT, recipe);
         startActivity(intentToStartDetailActivity);
     }
 
