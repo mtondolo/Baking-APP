@@ -35,10 +35,9 @@ public class RecipeJsonUtils {
             // Get the JSON object representing the recipe
             JSONObject recipe = recipeArray.getJSONObject(i);
             // Extract the value for the key called "id" and "name"
-            int id = recipe.optInt("id");
             String name = recipe.optString("name");
 
-            parsedRecipeData[i] = id + " - " + name;
+            parsedRecipeData[i] = name;
         }
 
         return parsedRecipeData;
