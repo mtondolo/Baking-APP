@@ -8,9 +8,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.bakingapp.model.Recipe;
+
 public class RecipeDetailActivity extends AppCompatActivity {
 
-    private String mRecipe;
+    //private String mRecipe;
+    private Recipe mRecipe;
     private TextView mRecipeDisplayTextView;
 
     @Override
@@ -22,9 +25,10 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
         // Display the recipe that was passed from MainActivity
         final Intent intentThatStartedThisActivity = getIntent();
+        mRecipe = intentThatStartedThisActivity.getParcelableExtra(Intent.EXTRA_TEXT);
         if (intentThatStartedThisActivity.hasExtra(Intent.EXTRA_TEXT)) {
-            mRecipe = intentThatStartedThisActivity.getStringExtra(intentThatStartedThisActivity.EXTRA_TEXT);
-            mRecipeDisplayTextView.setText(mRecipe);
+            String name = mRecipe.getName();
+            mRecipeDisplayTextView.setText(name);
         }
 
         mRecipeDisplayTextView.setOnClickListener(new View.OnClickListener() {

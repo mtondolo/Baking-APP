@@ -8,15 +8,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.bakingapp.model.Recipe;
 import com.example.bakingapp.utils.NetworkUtils;
 import com.example.bakingapp.utils.RecipeJsonUtils;
 
 import java.net.URL;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements RecipeAdapter.RecipeAdapterOnClickHandler {
 
@@ -75,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
 
     // This method handles RecyclerView item clicks.
     @Override
-    public void onClick(String recipe) {
+    public void onClick(Recipe recipe) {
         Context context = this;
         Class destinationActivity = RecipeDetailActivity.class;
         Intent intentToStartDetailActivity = new Intent(context, destinationActivity);
@@ -83,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
         startActivity(intentToStartDetailActivity);
     }
 
-    public class FetchRecipeTask extends AsyncTask<String, Void, String[]> {
+    public class FetchRecipeTask extends AsyncTask<String, Void, List<Recipe>> {
 
         @Override
         protected void onPreExecute() {
@@ -92,12 +94,12 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
         }
 
         @Override
-        protected String[] doInBackground(String... params) {
+        protected List<Recipe> doInBackground(String... params) {
             URL recipeRequestUrl = NetworkUtils.buildRecipeUrl();
             try {
                 String jsonRecipeResponse = NetworkUtils
                         .getResponseFromHttpUrl(recipeRequestUrl);
-                String[] simpleJsonRecipeData = RecipeJsonUtils
+                List<Recipe> simpleJsonRecipeData = RecipeJsonUtils
                         .getSimpleRecipeStringsFromJson(MainActivity.this, jsonRecipeResponse);
                 return simpleJsonRecipeData;
             } catch (Exception e) {
@@ -107,11 +109,11 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
         }
 
         @Override
-        protected void onPostExecute(String[] recipeData) {
+        protected void onPostExecute(List<Recipe> recipeData) {
             mLoadingIndicator.setVisibility(View.INVISIBLE);
             if (recipeData != null) {
                 // Iterate through the array and append the Strings to the TextView.
-                for (String recipeString : recipeData) {
+                for (Recipe recipeString : recipeData) {
                     showRecipeDataView();
                     mRecipeAdapter.setRecipeData(recipeData);
                 }

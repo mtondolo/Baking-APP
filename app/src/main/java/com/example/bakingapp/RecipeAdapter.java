@@ -9,15 +9,19 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.bakingapp.model.Recipe;
+
+import java.util.List;
+
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder> {
-    private String[] mRecipeData;
+    private List<Recipe> mRecipeData;
 
     // An on-click handler that we've defined to make it easy for an Activity to interface with our RecyclerView
     private final RecipeAdapterOnClickHandler mClickHandler;
 
     // The interface that receives onClick messages
     public interface RecipeAdapterOnClickHandler {
-        void onClick(String latestNewsItem);
+        void onClick(Recipe latestNewsItem);
     }
 
     // Creates a RecipeAdapter
@@ -43,8 +47,9 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     @Override
     public void onBindViewHolder(@NonNull RecipeViewHolder holder, int position) {
         // Set the text of the TextView to the policy for this list item's position
-        String recipe = mRecipeData[position];
-        holder.mRecipeTextView.setText(recipe);
+        Recipe recipe = mRecipeData.get(position);
+        String name = recipe.getName();
+        holder.mRecipeTextView.setText(name);
 
     }
 
@@ -52,7 +57,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     @Override
     public int getItemCount() {
         if (null == mRecipeData) return 0;
-        return mRecipeData.length;
+        return mRecipeData.size();
     }
 
     // Cache of the children views for a recipe list item.
@@ -69,13 +74,13 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         @Override
         public void onClick(View v) {
             int adapterPosition = getAdapterPosition();
-            String recipe = mRecipeData[adapterPosition];
+            Recipe recipe = mRecipeData.get(adapterPosition);
             mClickHandler.onClick(recipe);
         }
     }
 
     // This method is used to set the recipe on a RecipeAdapter if we've already created one.
-    public void setRecipeData(String[] recipeData) {
+    public void setRecipeData(List<Recipe> recipeData) {
         mRecipeData = recipeData;
         notifyDataSetChanged();
     }

@@ -6,9 +6,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.example.bakingapp.model.Recipe;
+
 public class RecipeVideoActivity extends AppCompatActivity {
 
-    private String mRecipeVideo;
+    private Recipe mRecipeVideo;
     private TextView mRecipeVideoTextView;
 
     @Override
@@ -20,9 +22,10 @@ public class RecipeVideoActivity extends AppCompatActivity {
 
         // Display the recipe details that were passed from RecipeVideoActivity
         Intent intentThatStartedRecipeVideoActivity = getIntent();
+        mRecipeVideo = intentThatStartedRecipeVideoActivity.getParcelableExtra(Intent.EXTRA_TEXT);
         if (intentThatStartedRecipeVideoActivity.hasExtra(Intent.EXTRA_TEXT)) {
-            mRecipeVideo = intentThatStartedRecipeVideoActivity.getStringExtra(intentThatStartedRecipeVideoActivity.EXTRA_TEXT);
-            mRecipeVideoTextView.setText(mRecipeVideo);
+            String name = mRecipeVideo.getName();
+            mRecipeVideoTextView.setText(name);
         }
     }
 }
