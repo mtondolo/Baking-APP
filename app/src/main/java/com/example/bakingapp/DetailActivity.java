@@ -10,35 +10,34 @@ import android.widget.TextView;
 
 import com.example.bakingapp.model.Recipe;
 
-public class RecipeDetailActivity extends AppCompatActivity {
+public class DetailActivity extends AppCompatActivity {
 
-    //private String mRecipe;
     private Recipe mRecipe;
-    private TextView mRecipeDisplayTextView;
+    private TextView mRecipeIngredientsTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recipe_detail);
+        setContentView(R.layout.activity_detail);
 
-        mRecipeDisplayTextView = findViewById(R.id.tv_display_recipe);
+        mRecipeIngredientsTextView = findViewById(R.id.tv_recipe_ingredients);
 
         // Display the recipe that was passed from MainActivity
         final Intent intentThatStartedThisActivity = getIntent();
         mRecipe = intentThatStartedThisActivity.getParcelableExtra(Intent.EXTRA_TEXT);
         if (intentThatStartedThisActivity.hasExtra(Intent.EXTRA_TEXT)) {
             String name = mRecipe.getName();
-            mRecipeDisplayTextView.setText(name);
+            setTitle(name);
         }
 
-        mRecipeDisplayTextView.setOnClickListener(new View.OnClickListener() {
+        mRecipeIngredientsTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Context context = RecipeDetailActivity.this;
-                Class destinationActivity = RecipeVideoActivity.class;
-                Intent intentToStartRecipeVideoActivity = new Intent(context, destinationActivity);
-                intentToStartRecipeVideoActivity.putExtra(intentToStartRecipeVideoActivity.EXTRA_TEXT, mRecipe);
-                startActivity(intentToStartRecipeVideoActivity);
+                Context context = DetailActivity.this;
+                Class destinationActivity = IngredientsActivity.class;
+                Intent intentToStartIngredientsActivity = new Intent(context, destinationActivity);
+                intentToStartIngredientsActivity.putExtra(intentToStartIngredientsActivity.EXTRA_TEXT, mRecipe);
+                startActivity(intentToStartIngredientsActivity);
             }
         });
     }

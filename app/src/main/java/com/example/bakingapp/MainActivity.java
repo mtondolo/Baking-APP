@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -79,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
     @Override
     public void onClick(Recipe recipe) {
         Context context = this;
-        Class destinationActivity = RecipeDetailActivity.class;
+        Class destinationActivity = DetailActivity.class;
         Intent intentToStartDetailActivity = new Intent(context, destinationActivity);
         intentToStartDetailActivity.putExtra(intentToStartDetailActivity.EXTRA_TEXT, recipe);
         startActivity(intentToStartDetailActivity);
