@@ -1,19 +1,31 @@
 package com.example.bakingapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.bakingapp.model.Ingredients;
 import com.example.bakingapp.model.Recipe;
+import com.example.bakingapp.model.Step;
+import com.example.bakingapp.utils.NetworkUtils;
+import com.example.bakingapp.utils.RecipeJsonUtils;
+
+import java.net.URL;
+import java.util.List;
 
 public class DetailActivity extends AppCompatActivity {
 
     private Recipe mRecipe;
     private TextView mRecipeIngredientsTextView;
+    private RecyclerView mRecyclerView;
+    private StepAdapter mStepAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,5 +52,55 @@ public class DetailActivity extends AppCompatActivity {
                 startActivity(intentToStartIngredientsActivity);
             }
         });
+
+        // Using findViewById, we get a reference to our RecyclerView from xml.
+        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerview_steps);
+
+        // LinearLayoutManager can support HORIZONTAL or VERTICAL orientations.
+        LinearLayoutManager layoutManager
+                = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        mRecyclerView.setLayoutManager(layoutManager);
+
+        // Use setHasFixedSize(true) on mRecyclerView to designate that all items in the list will have the same size.
+        mRecyclerView.setHasFixedSize(true);
+
+        // The NewsAdapter is responsible for linking our news data with the Views that will end up displaying our recipe data.
+        mStepAdapter = new StepAdapter();
+
+        // Use mRecyclerView.setAdapter and pass in mNewsAdapter.
+        mRecyclerView.setAdapter(mStepAdapter);
+
+        /* Once all of our views are setup, we can load the step data. */
+        loadStepData();
+    }
+
+    private void loadStepData() {
+        new FetchStepTask().execute();
+    }
+
+    public class FetchStepTask extends AsyncTask<String, Void, List<Step>> {
+
+        @Override
+        protected List<Step> doInBackground(String... params) {
+            URL recipeRequestUrl = NetworkUtils.buildRecipeUrl();
+            try {
+                String jsonRecipeResponse = NetworkUtils
+                        .getResponseFromHttpUrl(recipeRequestUrl);
+                List<Step> simpleJsonStepData = RecipeJsonUtils
+                        .getSimpleStepStringsFromJson(DetailActivity.this, jsonRecipeResponse);
+                return simpleJsonStepData;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        protected void onPostExecute(List<Step> stepData) {
+            if (stepData != null) {
+                for (Step stepString : stepData) {
+                    mStepAdapter.setStepData(stepData);
+                }
+            }
+        }
     }
 }
