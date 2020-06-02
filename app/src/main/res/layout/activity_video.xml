@@ -6,8 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".VideoActivity">
 
-    <ImageView
-        android:id="@+id/iv_step_video"
+    <com.google.android.exoplayer2.ui.SimpleExoPlayerView
+        android:id="@+id/playerView"
         android:layout_width="0dp"
         android:layout_height="256dp"
         android:layout_marginStart="8dp"
@@ -15,12 +15,9 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/presence_video_away"
-        tools:srcCompat="@android:drawable/presence_video_away" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_step_description"
@@ -29,9 +26,9 @@
         android:layout_marginTop="16dp"
         android:gravity="center"
         android:text="TextView"
-        app:layout_constraintEnd_toEndOf="@+id/iv_step_video"
-        app:layout_constraintStart_toStartOf="@+id/iv_step_video"
-        app:layout_constraintTop_toBottomOf="@+id/iv_step_video" />
+        app:layout_constraintEnd_toEndOf="@+id/playerView"
+        app:layout_constraintStart_toStartOf="@+id/playerView"
+        app:layout_constraintTop_toBottomOf="@+id/playerView" />
 
     <Button
         android:id="@+id/btn_back"

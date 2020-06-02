@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Baking App</string>
     <string name="error_message">No internet connection. Check your mobile data or WI-FI.</string>
+    <string name="play">Play</string>
+    <string name="pause">Pause</string>
+    <string name="restart">Restart</string>
+    <string name="step_video">Step Video</string>
+    <string name="notification_text">Press play to see the video!</string>
 </resources>
