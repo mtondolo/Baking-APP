@@ -9,13 +9,23 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.bakingapp.model.Ingredients;
 import com.example.bakingapp.model.Step;
 
 import java.util.List;
 
 public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepViewHolder> {
-    private List<Step> mStepData;
+    private List<Step> mStep;
+
+    final private StepAdapterOnClickHandler mClickHandler;
+
+    public interface StepAdapterOnClickHandler {
+        void onStepItemClick(Step clickedStepItem);
+    }
+
+    public StepAdapter(List<Step> steps, StepAdapterOnClickHandler clickHandler) {
+        mStep = steps;
+        mClickHandler = clickHandler;
+    }
 
 
     @NonNull
@@ -34,28 +44,37 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepViewHolder
     @Override
     public void onBindViewHolder(@NonNull StepViewHolder holder, int position) {
         // Set the text of the TextView to the step for this list item's position
-        Step step = mStepData.get(position);
+        Step step = mStep.get(position);
         String description = step.getDescription();
         holder.mDescriptionTextView.setText(description);
     }
 
     @Override
     public int getItemCount() {
-        if (null == mStepData) return 0;
-        return mStepData.size();
+        if (null == mStep) return 0;
+        return mStep.size();
     }
 
-    public class StepViewHolder extends RecyclerView.ViewHolder {
+    public class StepViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public final TextView mDescriptionTextView;
 
         public StepViewHolder(@NonNull View itemView) {
             super(itemView);
             mDescriptionTextView = itemView.findViewById(R.id.tv_description);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            int position = getAdapterPosition();
+            Step clickedStepItem = mStep.get(position);
+            mClickHandler.onStepItemClick(clickedStepItem);
         }
     }
 
     public void setStepData(List<Step> stepData) {
-        mStepData = stepData;
+        mStep = stepData;
         notifyDataSetChanged();
     }
+
 }

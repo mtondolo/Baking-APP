@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.bakingapp.model.Ingredients;
 import com.example.bakingapp.model.Recipe;
@@ -18,9 +19,10 @@ import com.example.bakingapp.utils.NetworkUtils;
 import com.example.bakingapp.utils.RecipeJsonUtils;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
-public class DetailActivity extends AppCompatActivity {
+public class DetailActivity extends AppCompatActivity implements StepAdapter.StepAdapterOnClickHandler {
 
     private Recipe mRecipe;
     private TextView mRecipeIngredientsTextView;
@@ -65,7 +67,7 @@ public class DetailActivity extends AppCompatActivity {
         mRecyclerView.setHasFixedSize(true);
 
         // The NewsAdapter is responsible for linking our news data with the Views that will end up displaying our recipe data.
-        mStepAdapter = new StepAdapter();
+        mStepAdapter = new StepAdapter(new ArrayList<Step>(), this);
 
         // Use mRecyclerView.setAdapter and pass in mNewsAdapter.
         mRecyclerView.setAdapter(mStepAdapter);
@@ -76,6 +78,15 @@ public class DetailActivity extends AppCompatActivity {
 
     private void loadStepData() {
         new FetchStepTask().execute();
+    }
+
+    @Override
+    public void onStepItemClick(Step clickedStepItem) {
+        Context context = this;
+        Class videoActivity = VideoActivity.class;
+        Intent videoActivityIntent = new Intent(context, videoActivity);
+        videoActivityIntent.putExtra(Intent.EXTRA_TEXT, clickedStepItem);
+        startActivity(videoActivityIntent);
     }
 
     public class FetchStepTask extends AsyncTask<String, Void, List<Step>> {
