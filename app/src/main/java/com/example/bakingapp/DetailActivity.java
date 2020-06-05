@@ -73,12 +73,12 @@ public class DetailActivity extends AppCompatActivity implements StepAdapter.Ste
         mRecyclerView.setAdapter(mStepAdapter);
 
         /* Once all of our views are setup, we can load the step data. */
-        loadStepData();
+        //loadStepData();
     }
 
-    private void loadStepData() {
+    /*private void loadStepData() {
         new FetchStepTask().execute();
-    }
+    }*/
 
     @Override
     public void onStepItemClick(Step clickedStepItem) {
@@ -89,7 +89,7 @@ public class DetailActivity extends AppCompatActivity implements StepAdapter.Ste
         startActivity(videoActivityIntent);
     }
 
-    public class FetchStepTask extends AsyncTask<String, Void, List<Step>> {
+    /*public class FetchStepTask extends AsyncTask<String, Void, List<Step>> {
 
         @Override
         protected List<Step> doInBackground(String... params) {
@@ -113,5 +113,5 @@ public class DetailActivity extends AppCompatActivity implements StepAdapter.Ste
                 }
             }
         }
-    }
+    }*/
 }

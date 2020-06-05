@@ -20,17 +20,18 @@ public class Ingredients implements Parcelable {
         ingredient = in.readString();
     }
 
-    public static final Creator<Ingredients> CREATOR = new Creator<Ingredients>() {
-        @Override
-        public Ingredients createFromParcel(Parcel in) {
-            return new Ingredients(in);
-        }
+    public static final Parcelable.Creator<Ingredients> CREATOR =
+            new Parcelable.Creator<Ingredients>() {
+                @Override
+                public Ingredients createFromParcel(Parcel parcel) {
+                    return new Ingredients(parcel);
+                }
 
-        @Override
-        public Ingredients[] newArray(int size) {
-            return new Ingredients[size];
-        }
-    };
+                @Override
+                public Ingredients[] newArray(int size) {
+                    return new Ingredients[size];
+                }
+            };
 
     public String getQuantity() {
         return quantity;

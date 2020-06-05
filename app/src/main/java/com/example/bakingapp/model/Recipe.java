@@ -3,20 +3,36 @@ package com.example.bakingapp.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.List;
+
 public class Recipe implements Parcelable {
 
     private String name;
+    List<Ingredients> ingredientList;
+    List<Step> stepList;
 
-    public Recipe(String name) {
+    public Recipe(String name, List<Ingredients> ingredientList, List<Step> stepList) {
         this.name = name;
+        this.ingredientList = ingredientList;
+        this.stepList = stepList;
     }
 
     public Recipe(Parcel parcel) {
         name = parcel.readString();
+        ingredientList = parcel.readParcelable(Recipe.class.getClassLoader());
+        stepList = parcel.readParcelable(Recipe.class.getClassLoader());
     }
 
     public String getName() {
         return name;
+    }
+
+    public List<Ingredients> getIngredientList() {
+        return ingredientList;
+    }
+
+    public List<Step> getStepList() {
+        return stepList;
     }
 
     @Override
@@ -27,6 +43,8 @@ public class Recipe implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(name);
+        dest.writeList(ingredientList);
+        dest.writeList(stepList);
     }
 
     public static final Parcelable.Creator<Recipe> CREATOR =

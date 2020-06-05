@@ -47,22 +47,45 @@ public class RecipeJsonUtils {
             String name = recipeObject.optString("name");
 
             JSONArray ingredientArray = recipeObject.getJSONArray("ingredients");
+            JSONArray stepArray = recipeObject.getJSONArray("steps");
+
             ingredientsList = new ArrayList<>();
-            for (int i1 = 0; i1 < ingredientArray.length(); i1++) {
-                JSONObject ingredientsObjects = ingredientArray.getJSONObject(i1);
+            stepList = new ArrayList<>();
+
+            for (int j = 0; j < ingredientArray.length(); j++) {
+                JSONObject ingredientsObjects = ingredientArray.getJSONObject(j);
                 quantity = ingredientsObjects.getString("quantity");
                 measure = ingredientsObjects.getString("measure");
                 ingredient = ingredientsObjects.getString("ingredient");
+
+                Ingredients ingredients1 = new Ingredients(quantity, measure, ingredient);
+                ingredientsList.add(ingredients1);
             }
 
-            Recipe recipe = new Recipe(name);
+            for (int k = 0; k < stepArray.length(); k++) {
+
+                JSONObject stepObject = stepArray.getJSONObject(k);
+
+                id = stepObject.optInt("id");
+                description = stepObject.optString("description");
+                videoURL = stepObject.optString("videoURL");
+                thumbnailURL = stepObject.optString("thumbnailURL");
+
+                Step step = new Step(id, description, videoURL, thumbnailURL);
+                stepList.add(step);
+            }
+
+
+            Recipe recipe = new Recipe(name, ingredientsList, stepList);
 
             recipeList.add(recipe);
         }
+
+
         return recipeList;
     }
 
-    public static List<Ingredients> getSimpleIngredientsStringsFromJson(Context context, String recipeJsonStr)
+   /* public static List<Ingredients> getSimpleIngredientsStringsFromJson(Context context, String recipeJsonStr)
             throws JSONException {
         // If the JSON string is empty or null, then return early.
         if (TextUtils.isEmpty(recipeJsonStr)) {
@@ -87,18 +110,17 @@ public class RecipeJsonUtils {
                 quantity = ingredientsObjects.getString("quantity");
                 measure = ingredientsObjects.getString("measure");
                 ingredient = ingredientsObjects.getString("ingredient");
-
-                Ingredients ingredients = new Ingredients(quantity, measure, ingredient);
-
-                ingredientsList.add(ingredients);
             }
+
+            ingredients = new Ingredients(quantity, measure, ingredient);
+            ingredientsList.add(ingredients);
 
         }
         return ingredientsList;
 
-    }
+    }*/
 
-    public static List<Step> getSimpleStepStringsFromJson(Context context, String recipeJsonStr)
+  /*  public static List<Step> getSimpleStepStringsFromJson(Context context, String recipeJsonStr)
             throws JSONException {
         // If the JSON string is empty or null, then return early.
         if (TextUtils.isEmpty(recipeJsonStr)) {
@@ -135,6 +157,6 @@ public class RecipeJsonUtils {
         }
         return stepList;
 
-    }
+    }*/
 }
 

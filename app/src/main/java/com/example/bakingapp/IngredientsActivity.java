@@ -42,14 +42,14 @@ public class IngredientsActivity extends AppCompatActivity {
 
         mIngredientsRecyclerView.setAdapter(mIngredientsAdapter);
 
-        loadIngredientsDetailsData();
+        //loadIngredientsDetailsData();
     }
 
-    private void loadIngredientsDetailsData() {
+   /* private void loadIngredientsDetailsData() {
         new FetchIngredientsTask().execute();
-    }
+    }*/
 
-    public class FetchIngredientsTask extends AsyncTask<String, Void, List<Ingredients>> {
+    /*public class FetchIngredientsTask extends AsyncTask<String, Void, List<Ingredients>> {
 
         @Override
         protected List<Ingredients> doInBackground(String... params) {
@@ -73,5 +73,5 @@ public class IngredientsActivity extends AppCompatActivity {
                 }
             }
         }
-    }
+    }*/
 }
