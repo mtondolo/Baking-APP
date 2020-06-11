@@ -4,18 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.AsyncTask;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.os.Parcelable;
 import android.widget.TextView;
 
 import com.example.bakingapp.model.Ingredients;
-import com.example.bakingapp.model.Recipe;
-import com.example.bakingapp.utils.NetworkUtils;
-import com.example.bakingapp.utils.RecipeJsonUtils;
 
-import java.net.URL;
-import java.util.List;
+import java.util.ArrayList;
 
 public class IngredientsActivity extends AppCompatActivity {
 
@@ -30,6 +26,12 @@ public class IngredientsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ingredients);
 
+        // Display the recipe that was passed from MainActivity
+        final Intent intentThatStartedThisActivity = getIntent();
+
+        // Load the step data.
+        ArrayList<Parcelable> ingredientsList = intentThatStartedThisActivity.getParcelableArrayListExtra(Intent.EXTRA_TEXT);
+
         mIngredientsRecyclerView = findViewById(R.id.recyclerview_ingredients);
 
         // LinearLayoutManager can support HORIZONTAL or VERTICAL orientations.
@@ -38,40 +40,8 @@ public class IngredientsActivity extends AppCompatActivity {
         mIngredientsRecyclerView.setLayoutManager(layoutManager);
         mIngredientsRecyclerView.setHasFixedSize(true);
 
-        mIngredientsAdapter = new IngredientsAdapter();
+        mIngredientsAdapter = new IngredientsAdapter(ingredientsList);
 
         mIngredientsRecyclerView.setAdapter(mIngredientsAdapter);
-
-        //loadIngredientsDetailsData();
     }
-
-   /* private void loadIngredientsDetailsData() {
-        new FetchIngredientsTask().execute();
-    }*/
-
-    /*public class FetchIngredientsTask extends AsyncTask<String, Void, List<Ingredients>> {
-
-        @Override
-        protected List<Ingredients> doInBackground(String... params) {
-            URL recipeRequestUrl = NetworkUtils.buildRecipeUrl();
-            try {
-                String jsonRecipeResponse = NetworkUtils
-                        .getResponseFromHttpUrl(recipeRequestUrl);
-                List<Ingredients> simpleJsonIngredientsData = RecipeJsonUtils
-                        .getSimpleIngredientsStringsFromJson(IngredientsActivity.this, jsonRecipeResponse);
-                return simpleJsonIngredientsData;
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
-
-        protected void onPostExecute(List<Ingredients> ingredientsData) {
-            if (ingredientsData != null) {
-                for (Ingredients ingredientsString : ingredientsData) {
-                    mIngredientsAdapter.setIngredientsDetailsData(ingredientsData);
-                }
-            }
-        }
-    }*/
 }

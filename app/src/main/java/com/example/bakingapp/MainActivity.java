@@ -25,7 +25,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements RecipeAdapter.RecipeAdapterOnClickHandler {
 
-    public static final String INGREDIENTS_LIST_ID = "com.example.bakingapp.STEP_LIST_ID";
+    public static final String INGREDIENTS_ID = "com.example.bakingapp.STEP_LIST_ID";
 
     private RecyclerView mRecyclerView;
     private RecipeAdapter mRecipeAdapter;
@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
         List<Ingredients> ingredientsList = recipe.getIngredientList();
         List<Step> stepsList = recipe.getStepList();
 
-        intentToStartDetailActivity.putParcelableArrayListExtra(INGREDIENTS_LIST_ID,
+        intentToStartDetailActivity.putParcelableArrayListExtra(INGREDIENTS_ID,
                 (ArrayList<? extends Parcelable>) ingredientsList);
 
         intentToStartDetailActivity.putParcelableArrayListExtra(intentToStartDetailActivity.EXTRA_TEXT,

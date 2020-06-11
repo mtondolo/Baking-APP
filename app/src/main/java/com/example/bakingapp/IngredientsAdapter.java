@@ -1,6 +1,7 @@
 package com.example.bakingapp;
 
 import android.content.Context;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,12 +11,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bakingapp.model.Ingredients;
-import com.example.bakingapp.model.Recipe;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.IngredientsViewHolder> {
-    private List<Ingredients> mIngredientsData;
+    private ArrayList<Parcelable> mIngredientsData;
+
+    public IngredientsAdapter(ArrayList<Parcelable> ingredientsList) {
+        mIngredientsData = ingredientsList;
+    }
 
     @NonNull
     @Override
@@ -33,7 +37,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
     @Override
     public void onBindViewHolder(@NonNull IngredientsViewHolder holder, int position) {
         // Set the text of the TextView to the policy for this list item's position
-        Ingredients ingredients = mIngredientsData.get(position);
+        Ingredients ingredients = (Ingredients) mIngredientsData.get(position);
 
         String quantity = ingredients.getQuantity();
         String measure = ingredients.getMeasure();
@@ -64,7 +68,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
     }
 
 
-    public void setIngredientsDetailsData(List<Ingredients> ingredientsData) {
+    public void setIngredientsDetailsData(ArrayList<Parcelable> ingredientsData) {
         mIngredientsData = ingredientsData;
         notifyDataSetChanged();
     }

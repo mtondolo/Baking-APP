@@ -15,7 +15,7 @@ import com.example.bakingapp.model.Step;
 
 import java.util.ArrayList;
 
-import static com.example.bakingapp.MainActivity.INGREDIENTS_LIST_ID;
+import static com.example.bakingapp.MainActivity.INGREDIENTS_ID;
 
 public class DetailActivity extends AppCompatActivity implements StepAdapter.StepAdapterOnClickHandler {
 
@@ -34,7 +34,8 @@ public class DetailActivity extends AppCompatActivity implements StepAdapter.Ste
         final Intent intentThatStartedThisActivity = getIntent();
 
         // Load the step data.
-        ArrayList<Parcelable> stepsList = intentThatStartedThisActivity.getParcelableArrayListExtra(Intent.EXTRA_TEXT);
+        ArrayList<Parcelable> stepsList = intentThatStartedThisActivity
+                .getParcelableArrayListExtra(Intent.EXTRA_TEXT);
 
         mRecipeIngredientsTextView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,9 +44,11 @@ public class DetailActivity extends AppCompatActivity implements StepAdapter.Ste
                 Class destinationActivity = IngredientsActivity.class;
                 Intent intentToStartIngredientsActivity = new Intent(context, destinationActivity);
 
-                if (intentThatStartedThisActivity.hasExtra(INGREDIENTS_LIST_ID)) {
-                    ArrayList<Parcelable> ingredientsList = intentThatStartedThisActivity.getParcelableArrayListExtra(INGREDIENTS_LIST_ID);
-                    intentToStartIngredientsActivity.putExtra(intentToStartIngredientsActivity.EXTRA_TEXT, ingredientsList);
+                if (intentThatStartedThisActivity.hasExtra(INGREDIENTS_ID)) {
+                    ArrayList<Parcelable> ingredientsList = intentThatStartedThisActivity
+                            .getParcelableArrayListExtra(INGREDIENTS_ID);
+                    intentToStartIngredientsActivity
+                            .putExtra(intentToStartIngredientsActivity.EXTRA_TEXT, ingredientsList);
                 }
 
                 startActivity(intentToStartIngredientsActivity);
