@@ -1,6 +1,7 @@
 package com.example.bakingapp;
 
 import android.content.Context;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,10 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bakingapp.model.Step;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepViewHolder> {
-    private List<Step> mStep;
+    private ArrayList<Parcelable> mStep;
 
     final private StepAdapterOnClickHandler mClickHandler;
 
@@ -22,7 +23,7 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepViewHolder
         void onStepItemClick(Step clickedStepItem);
     }
 
-    public StepAdapter(List<Step> steps, StepAdapterOnClickHandler clickHandler) {
+    public StepAdapter(ArrayList<Parcelable> steps, StepAdapterOnClickHandler clickHandler) {
         mStep = steps;
         mClickHandler = clickHandler;
     }
@@ -44,7 +45,7 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepViewHolder
     @Override
     public void onBindViewHolder(@NonNull StepViewHolder holder, int position) {
         // Set the text of the TextView to the step for this list item's position
-        Step step = mStep.get(position);
+        Step step = (Step) mStep.get(position);
         String description = step.getDescription();
         holder.mDescriptionTextView.setText(description);
     }
@@ -67,12 +68,12 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepViewHolder
         @Override
         public void onClick(View v) {
             int position = getAdapterPosition();
-            Step clickedStepItem = mStep.get(position);
+            Step clickedStepItem = (Step) mStep.get(position);
             mClickHandler.onStepItemClick(clickedStepItem);
         }
     }
 
-    public void setStepData(List<Step> stepData) {
+    public void setStepData(ArrayList<Parcelable> stepData) {
         mStep = stepData;
         notifyDataSetChanged();
     }
