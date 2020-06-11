@@ -8,18 +8,24 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.bakingapp.model.Ingredients;
 import com.example.bakingapp.model.Recipe;
+import com.example.bakingapp.model.Step;
 import com.example.bakingapp.utils.NetworkUtils;
 import com.example.bakingapp.utils.RecipeJsonUtils;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements RecipeAdapter.RecipeAdapterOnClickHandler {
+
+    public static final String INGREDIENTS_LIST_ID = "com.example.bakingapp.STEP_LIST_ID";
 
     private RecyclerView mRecyclerView;
     private RecipeAdapter mRecipeAdapter;
@@ -80,7 +86,16 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
         Context context = this;
         Class destinationActivity = DetailActivity.class;
         Intent intentToStartDetailActivity = new Intent(context, destinationActivity);
-        intentToStartDetailActivity.putExtra(intentToStartDetailActivity.EXTRA_TEXT, recipe);
+
+        List<Ingredients> ingredientsList = recipe.getIngredientList();
+        List<Step> stepsList = recipe.getStepList();
+
+        intentToStartDetailActivity.putParcelableArrayListExtra(INGREDIENTS_LIST_ID,
+                (ArrayList<? extends Parcelable>) ingredientsList);
+
+        intentToStartDetailActivity.putParcelableArrayListExtra(intentToStartDetailActivity.EXTRA_TEXT,
+                (ArrayList<? extends Parcelable>) stepsList);
+
         startActivity(intentToStartDetailActivity);
     }
 

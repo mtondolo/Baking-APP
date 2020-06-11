@@ -6,21 +6,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.bakingapp.model.Ingredients;
 import com.example.bakingapp.model.Recipe;
 import com.example.bakingapp.model.Step;
-import com.example.bakingapp.utils.NetworkUtils;
-import com.example.bakingapp.utils.RecipeJsonUtils;
 
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
+
+import static com.example.bakingapp.MainActivity.INGREDIENTS_LIST_ID;
 
 public class DetailActivity extends AppCompatActivity implements StepAdapter.StepAdapterOnClickHandler {
 
@@ -38,10 +34,13 @@ public class DetailActivity extends AppCompatActivity implements StepAdapter.Ste
 
         // Display the recipe that was passed from MainActivity
         final Intent intentThatStartedThisActivity = getIntent();
-        mRecipe = intentThatStartedThisActivity.getParcelableExtra(Intent.EXTRA_TEXT);
+        ArrayList<Parcelable> stepsList = intentThatStartedThisActivity.getParcelableArrayListExtra(Intent.EXTRA_TEXT);
+
+        //mRecipe = intentThatStartedThisActivity.getParcelableExtra(Intent.EXTRA_TEXT);
+
         if (intentThatStartedThisActivity.hasExtra(Intent.EXTRA_TEXT)) {
-            String name = mRecipe.getName();
-            setTitle(name);
+           /* String name = mRecipe.getName();
+            setTitle(name);*/
         }
 
         mRecipeIngredientsTextView.setOnClickListener(new View.OnClickListener() {
@@ -50,7 +49,12 @@ public class DetailActivity extends AppCompatActivity implements StepAdapter.Ste
                 Context context = DetailActivity.this;
                 Class destinationActivity = IngredientsActivity.class;
                 Intent intentToStartIngredientsActivity = new Intent(context, destinationActivity);
-                intentToStartIngredientsActivity.putExtra(intentToStartIngredientsActivity.EXTRA_TEXT, mRecipe);
+
+                if(intentThatStartedThisActivity.hasExtra(INGREDIENTS_LIST_ID)) {
+                    ArrayList<Parcelable> ingredientsList = intentThatStartedThisActivity.getParcelableArrayListExtra(INGREDIENTS_LIST_ID);
+                    intentToStartIngredientsActivity.putExtra(intentToStartIngredientsActivity.EXTRA_TEXT, ingredientsList);
+                }
+
                 startActivity(intentToStartIngredientsActivity);
             }
         });
@@ -82,11 +86,11 @@ public class DetailActivity extends AppCompatActivity implements StepAdapter.Ste
 
     @Override
     public void onStepItemClick(Step clickedStepItem) {
-        Context context = this;
+       /* Context context = this;
         Class videoActivity = VideoActivity.class;
         Intent videoActivityIntent = new Intent(context, videoActivity);
         videoActivityIntent.putExtra(Intent.EXTRA_TEXT, clickedStepItem);
-        startActivity(videoActivityIntent);
+        startActivity(videoActivityIntent);*/
     }
 
     /*public class FetchStepTask extends AsyncTask<String, Void, List<Step>> {
