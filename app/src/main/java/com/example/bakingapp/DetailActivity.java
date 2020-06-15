@@ -1,6 +1,7 @@
 package com.example.bakingapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,9 +18,10 @@ import java.util.ArrayList;
 
 import static com.example.bakingapp.MainActivity.INGREDIENTS_ID;
 
-public class DetailActivity extends AppCompatActivity implements StepAdapter.StepAdapterOnClickHandler {
+public class DetailActivity extends AppCompatActivity
+        implements StepAdapter.StepAdapterOnClickHandler {
 
-    private TextView mRecipeIngredientsTextView;
+    //private TextView mRecipeIngredientsTextView;
     private RecyclerView mRecyclerView;
     private StepAdapter mStepAdapter;
 
@@ -28,7 +30,17 @@ public class DetailActivity extends AppCompatActivity implements StepAdapter.Ste
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        mRecipeIngredientsTextView = findViewById(R.id.tv_recipe_ingredients);
+        // Create a new head BodyPartFragment
+        RecipePartFragment ingredientFragment = new RecipePartFragment();
+
+        // Add the fragment to its container using a FragmentManager and a Transaction
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        fragmentManager.beginTransaction()
+                .add(R.id.ingredients_container, ingredientFragment)
+                .commit();
+
+        //mRecipeIngredientsTextView = findViewById(R.id.tv_recipe_ingredients);
 
         // Display the recipe that was passed from MainActivity
         final Intent intentThatStartedThisActivity = getIntent();
@@ -37,7 +49,7 @@ public class DetailActivity extends AppCompatActivity implements StepAdapter.Ste
         ArrayList<Parcelable> stepsList = intentThatStartedThisActivity
                 .getParcelableArrayListExtra(Intent.EXTRA_TEXT);
 
-        mRecipeIngredientsTextView.setOnClickListener(new View.OnClickListener() {
+        /*mRecipeIngredientsTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Context context = DetailActivity.this;
@@ -53,7 +65,7 @@ public class DetailActivity extends AppCompatActivity implements StepAdapter.Ste
 
                 startActivity(intentToStartIngredientsActivity);
             }
-        });
+        });*/
 
         // Using findViewById, we get a reference to our RecyclerView from xml.
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerview_steps);

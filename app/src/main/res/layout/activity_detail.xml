@@ -15,7 +15,7 @@
         app:cardUseCompatPadding="true"
         app:contentPadding="16dp">
 
-        <TextView
+     <!--   <TextView
             android:id="@+id/tv_recipe_ingredients"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -24,7 +24,13 @@
             android:padding="16dp"
             android:text="Ingredients"
             android:textSize="24sp"
-            android:textStyle="italic" />
+            android:textStyle="italic" />-->
+        <!-- This container holds the head RecipePartFragment  -->
+        <FrameLayout
+            android:id="@+id/ingredients_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
 
     </androidx.cardview.widget.CardView>
 
