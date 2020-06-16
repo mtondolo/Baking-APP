@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import static com.example.bakingapp.MainActivity.INGREDIENTS_ID;
 
 public class DetailActivity extends AppCompatActivity
-        implements StepAdapter.StepAdapterOnClickHandler {
+        /* implements StepAdapter.StepAdapterOnClickHandler*/ {
 
     //private TextView mRecipeIngredientsTextView;
     private RecyclerView mRecyclerView;
@@ -40,14 +40,21 @@ public class DetailActivity extends AppCompatActivity
                 .add(R.id.ingredients_container, ingredientFragment)
                 .commit();
 
+        // Create a new head BodyPartFragment
+        RecipePartFragment stepsFragment = new RecipePartFragment();
+
+        fragmentManager.beginTransaction()
+                .add(R.id.steps_container, stepsFragment)
+                .commit();
+
         //mRecipeIngredientsTextView = findViewById(R.id.tv_recipe_ingredients);
 
         // Display the recipe that was passed from MainActivity
-        final Intent intentThatStartedThisActivity = getIntent();
+        /*final Intent intentThatStartedThisActivity = getIntent();
 
         // Load the step data.
         ArrayList<Parcelable> stepsList = intentThatStartedThisActivity
-                .getParcelableArrayListExtra(Intent.EXTRA_TEXT);
+                .getParcelableArrayListExtra(Intent.EXTRA_TEXT);*/
 
         /*mRecipeIngredientsTextView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,7 +75,7 @@ public class DetailActivity extends AppCompatActivity
         });*/
 
         // Using findViewById, we get a reference to our RecyclerView from xml.
-        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerview_steps);
+        /*mRecyclerView = (RecyclerView) findViewById(R.id.recyclerview_steps);
 
         // LinearLayoutManager can support HORIZONTAL or VERTICAL orientations.
         LinearLayoutManager layoutManager
@@ -82,15 +89,15 @@ public class DetailActivity extends AppCompatActivity
         mStepAdapter = new StepAdapter(stepsList, this);
 
         // Use mRecyclerView.setAdapter and pass in mNewsAdapter.
-        mRecyclerView.setAdapter(mStepAdapter);
+        mRecyclerView.setAdapter(mStepAdapter);*/
     }
 
-    @Override
+   /* @Override
     public void onStepItemClick(Step clickedStepItem) {
         Context context = this;
         Class videoActivity = VideoActivity.class;
         Intent videoActivityIntent = new Intent(context, videoActivity);
         videoActivityIntent.putExtra(Intent.EXTRA_TEXT, clickedStepItem);
         startActivity(videoActivityIntent);
-    }
+    }*/
 }

@@ -10,10 +10,22 @@
  limitations under the License.-->
 
 <!-- This fragment layout displays just one text view of an recipe part -->
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/ingredient_part_text_view"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:textSize="24sp"
-    android:textStyle="italic">
-</TextView>
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/ingredient_part_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:paddingBottom="16dp"
+        android:textSize="24sp"
+        android:textStyle="italic"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/steps_part_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>
