@@ -14,11 +14,13 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.bakingapp.model.Step;
+
 import java.util.ArrayList;
 
 import static com.example.bakingapp.MainActivity.INGREDIENTS_ID;
 
-public class RecipePartFragment extends Fragment {
+public class RecipePartFragment extends Fragment implements StepAdapter.StepAdapterOnClickHandler {
 
     private StepAdapter mStepAdapter;
     private RecyclerView mRecyclerView;
@@ -36,7 +38,7 @@ public class RecipePartFragment extends Fragment {
         // Load the step data.
         ArrayList<Parcelable> stepsList = intentThatStartedThisActivity
                 .getParcelableArrayListExtra(Intent.EXTRA_TEXT);
-        
+
         View rootView = inflater.inflate(R.layout.fragment_recipe_part, container, false);
         TextView ingredientsTextView = (TextView) rootView.findViewById(R.id.ingredient_part_text_view);
         ingredientsTextView.setText("Ingredients");
@@ -66,8 +68,14 @@ public class RecipePartFragment extends Fragment {
         mStepAdapter = new StepAdapter(stepsList, this);
 
         mRecyclerView.setAdapter(mStepAdapter);
-
         // Return the rootView
         return rootView;
+    }
+
+    @Override
+    public void onStepItemClick(Step clickedStepItem) {
+        Intent videoActivityIntent = new Intent(getContext(), VideoActivity.class);
+        videoActivityIntent.putExtra(Intent.EXTRA_TEXT, clickedStepItem);
+        startActivity(videoActivityIntent);
     }
 }

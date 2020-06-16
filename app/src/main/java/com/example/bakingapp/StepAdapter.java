@@ -17,18 +17,18 @@ import java.util.ArrayList;
 public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepViewHolder> {
     private ArrayList<Parcelable> mStep;
 
-    private RecipePartFragment mRecipePartFragment;
-    //final private StepAdapterOnClickHandler mClickHandler;
+    //private RecipePartFragment mRecipePartFragment;
+    final private StepAdapterOnClickHandler mClickHandler;
 
-    /*public interface StepAdapterOnClickHandler {
+    public interface StepAdapterOnClickHandler {
         void onStepItemClick(Step clickedStepItem);
-    }*/
+    }
 
-    public StepAdapter(ArrayList<Parcelable> steps,/*, StepAdapterOnClickHandler clickHandler*/RecipePartFragment recipePartFragment) {
+    public StepAdapter(ArrayList<Parcelable> steps, StepAdapterOnClickHandler clickHandler
+            /*, RecipePartFragment recipePartFragment*/) {
         mStep = steps;
-        //mClickHandler = clickHandler;
-        mRecipePartFragment = recipePartFragment;
-
+        mClickHandler = clickHandler;
+        //mRecipePartFragment = recipePartFragment;
     }
 
 
@@ -59,21 +59,21 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepViewHolder
         return mStep.size();
     }
 
-    public class StepViewHolder extends RecyclerView.ViewHolder /*implements View.OnClickListener*/ {
+    public class StepViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public final TextView mDescriptionTextView;
 
         public StepViewHolder(@NonNull View itemView) {
             super(itemView);
             mDescriptionTextView = itemView.findViewById(R.id.tv_description);
-            //itemView.setOnClickListener(this);
+            itemView.setOnClickListener(this);
         }
 
-       /* @Override
+        @Override
         public void onClick(View v) {
             int position = getAdapterPosition();
             Step clickedStepItem = (Step) mStep.get(position);
             mClickHandler.onStepItemClick(clickedStepItem);
-        }*/
+        }
     }
 
     public void setStepData(ArrayList<Parcelable> stepData) {
