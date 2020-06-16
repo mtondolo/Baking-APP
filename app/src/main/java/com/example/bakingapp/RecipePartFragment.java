@@ -1,6 +1,7 @@
 package com.example.bakingapp;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -14,6 +15,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+
+import static com.example.bakingapp.MainActivity.INGREDIENTS_ID;
 
 public class RecipePartFragment extends Fragment {
 
@@ -33,13 +36,26 @@ public class RecipePartFragment extends Fragment {
         // Load the step data.
         ArrayList<Parcelable> stepsList = intentThatStartedThisActivity
                 .getParcelableArrayListExtra(Intent.EXTRA_TEXT);
-
-
+        
         View rootView = inflater.inflate(R.layout.fragment_recipe_part, container, false);
-        TextView textView = (TextView) rootView.findViewById(R.id.ingredient_part_text_view);
-        textView.setText("Ingredients");
+        TextView ingredientsTextView = (TextView) rootView.findViewById(R.id.ingredient_part_text_view);
+        ingredientsTextView.setText("Ingredients");
+        ingredientsTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentToStartIngredientsActivity = new Intent(getContext(), IngredientsActivity.class);
+                if (intentThatStartedThisActivity.hasExtra(INGREDIENTS_ID)) {
+                    ArrayList<Parcelable> ingredientsList = intentThatStartedThisActivity
+                            .getParcelableArrayListExtra(INGREDIENTS_ID);
+                    intentToStartIngredientsActivity
+                            .putExtra(intentToStartIngredientsActivity.EXTRA_TEXT, ingredientsList);
+                }
 
-         mRecyclerView = rootView.findViewById(R.id.steps_part_recyclerview);
+                startActivity(intentToStartIngredientsActivity);
+            }
+        });
+
+        mRecyclerView = rootView.findViewById(R.id.steps_part_recyclerview);
 
         LinearLayoutManager layoutManager
                 = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
