@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bakingapp.model.Recipe;
@@ -14,18 +15,18 @@ import com.example.bakingapp.model.Recipe;
 import java.util.List;
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder> {
-    private List<Recipe> mRecipeData;
+    private List<Recipe> mRecipe;
 
     // An on-click handler that we've defined to make it easy for an Activity to interface with our RecyclerView
-    private final RecipeAdapterOnClickHandler mClickHandler;
+    private final FragmentActivity mClickHandler;
 
     // The interface that receives onClick messages
     public interface RecipeAdapterOnClickHandler {
-        void onClick(Recipe latestNewsItem);
+        void onClick(Recipe recipe);
     }
 
     // Creates a RecipeAdapter
-    public RecipeAdapter(RecipeAdapterOnClickHandler clickHandler) {
+    public RecipeAdapter(FragmentActivity clickHandler) {
         mClickHandler = clickHandler;
     }
 
@@ -47,7 +48,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     @Override
     public void onBindViewHolder(@NonNull RecipeViewHolder holder, int position) {
         // Set the text of the TextView to the policy for this list item's position
-        Recipe recipe = mRecipeData.get(position);
+        Recipe recipe = mRecipe.get(position);
         String name = recipe.getName();
         holder.mRecipeTextView.setText(name);
 
@@ -56,8 +57,8 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     // This method simply returns the number of items to display.
     @Override
     public int getItemCount() {
-        if (null == mRecipeData) return 0;
-        return mRecipeData.size();
+        if (null == mRecipe) return 0;
+        return mRecipe.size();
     }
 
     // Cache of the children views for a recipe list item.
@@ -74,14 +75,14 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         @Override
         public void onClick(View v) {
             int adapterPosition = getAdapterPosition();
-            Recipe recipe = mRecipeData.get(adapterPosition);
-            mClickHandler.onClick(recipe);
+            Recipe recipe = mRecipe.get(adapterPosition);
+            //mClickHandler.onClick(recipe);
         }
     }
 
     // This method is used to set the recipe on a RecipeAdapter if we've already created one.
-    public void setRecipeData(List<Recipe> recipeData) {
-        mRecipeData = recipeData;
+    public void setRecipe(List<Recipe> recipe) {
+        mRecipe = recipe;
         notifyDataSetChanged();
     }
 }

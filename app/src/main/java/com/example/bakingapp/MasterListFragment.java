@@ -1,17 +1,18 @@
 package com.example.bakingapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bakingapp.model.Ingredients;
 import com.example.bakingapp.model.Recipe;
@@ -23,69 +24,62 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity /*implements RecipeAdapter.RecipeAdapterOnClickHandler*/ {
 
-    /*public static final String INGREDIENTS_ID = "com.example.bakingapp.STEP_LIST_ID";
+// This fragment displays all of the recipes in one large list
+// The list appears as a list of images
+public class MasterListFragment extends Fragment implements RecipeAdapter.RecipeAdapterOnClickHandler{
 
+    private static final String INGREDIENTS_ID = "com.example.bakingapp.STEP_LIST_ID";;
     private RecyclerView mRecyclerView;
     private RecipeAdapter mRecipeAdapter;
     private TextView mErrorMessageDisplay;
-    private ProgressBar mLoadingIndicator;*/
+    private ProgressBar mLoadingIndicator;
 
+    // Mandatory empty constructor
+    public MasterListFragment() {
+    }
+
+    // Inflates the GridView of all AndroidMe images
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        final View rootView = inflater.inflate(R.layout.fragment_master_list, container, false);
 
-        /*// Using findViewById, we get a reference to our RecyclerView from xml.
-        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerview_recipe);
+        // Get a reference to the recyclerview in the fragment_master_list xml layout file
+        //GridView gridView = (GridView) rootView.findViewById(R.id.images_grid_view);
+        mRecyclerView = rootView.findViewById(R.id.recyclerview_recipe);
 
         // This TextView is used to display errors and will be hidden if there are no errors
-        mErrorMessageDisplay = (TextView) findViewById(R.id.tv_error_message_display);
+        mErrorMessageDisplay = (TextView) rootView.findViewById(R.id.tv_error_message_display);
 
         // The ProgressBar that will indicate to the user that we are loading data.
-        mLoadingIndicator = (ProgressBar) findViewById(R.id.pb_loading_indicator);
+        mLoadingIndicator = (ProgressBar) rootView.findViewById(R.id.pb_loading_indicator);
 
         // LinearLayoutManager can support HORIZONTAL or VERTICAL orientations.
         LinearLayoutManager layoutManager
-                = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+                = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(layoutManager);
 
         // Use setHasFixedSize(true) on mRecyclerView to designate that all items in the list will have the same size.
         mRecyclerView.setHasFixedSize(true);
 
-        // The NewsAdapter is responsible for linking our news data with the Views that will end up displaying our recipe data.
-        mRecipeAdapter = new RecipeAdapter(this);
+        mRecipeAdapter = new RecipeAdapter(getActivity());
 
-        // Use mRecyclerView.setAdapter and pass in mNewsAdapter.
+        // Set the adapter on the GridView
         mRecyclerView.setAdapter(mRecipeAdapter);
 
-        *//* Once all of our views are setup, we can load the recipe data. *//*
-        loadRecipeData();*/
+        /* Once all of our views are setup, we can load the recipe data. */
+        loadRecipeData();
+
+        // Return the root view
+        return rootView;
+
     }
 
-    // This method will tell some background method to get the recipe data in the background.
-    /*private void loadRecipeData() {
-        new FetchRecipeTask().execute();
-    }
-
-    private void showRecipeDataView() {
-        mErrorMessageDisplay.setVisibility(View.INVISIBLE);
-        mRecyclerView.setVisibility(View.VISIBLE);
-    }
-
-    // his method will make the error message visible and hide the recipe View.
-    private void showErrorMessage() {
-        mRecyclerView.setVisibility(View.INVISIBLE);
-        mErrorMessageDisplay.setVisibility(View.VISIBLE);
-    }*/
-
-    // This method handles RecyclerView item clicks.
-  /*  @Override
+@Override
     public void onClick(Recipe recipe) {
-        Context context = this;
         Class destinationActivity = DetailActivity.class;
-        Intent intentToStartDetailActivity = new Intent(context, destinationActivity);
+        Intent intentToStartDetailActivity = new Intent(getContext(), destinationActivity);
 
         List<Ingredients> ingredientsList = recipe.getIngredientList();
         List<Step> stepsList = recipe.getStepList();
@@ -96,10 +90,16 @@ public class MainActivity extends AppCompatActivity /*implements RecipeAdapter.R
         intentToStartDetailActivity.putParcelableArrayListExtra(intentToStartDetailActivity.EXTRA_TEXT,
                 (ArrayList<? extends Parcelable>) stepsList);
 
-        startActivity(intentToStartDetailActivity);*/
-    //}
+        startActivity(intentToStartDetailActivity);
+    }
 
-    /*public class FetchRecipeTask extends AsyncTask<String, Void, List<Recipe>> {
+    // This method will tell some background method to get the recipe data in the background.
+    private void loadRecipeData() {
+        new FetchRecipeTask().execute();
+    }
+
+
+    public class FetchRecipeTask extends AsyncTask<String, Void, List<Recipe>> {
 
         @Override
         protected void onPreExecute() {
@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity /*implements RecipeAdapter.R
                 String jsonRecipeResponse = NetworkUtils
                         .getResponseFromHttpUrl(recipeRequestUrl);
                 List<Recipe> simpleJsonRecipeData = RecipeJsonUtils
-                        .getSimpleRecipeStringsFromJson(MainActivity.this, jsonRecipeResponse);
+                        .getSimpleRecipeStringsFromJson(getContext(), jsonRecipeResponse);
                 return simpleJsonRecipeData;
             } catch (Exception e) {
                 e.printStackTrace();
@@ -129,12 +129,22 @@ public class MainActivity extends AppCompatActivity /*implements RecipeAdapter.R
                 // Iterate through the array and append the Strings to the TextView.
                 for (Recipe recipeString : recipeData) {
                     showRecipeDataView();
-                    mRecipeAdapter.setRecipeData(recipeData);
+                    mRecipeAdapter.setRecipe(recipeData);
                 }
             } else {
                 showErrorMessage();
             }
         }
-    }*/
-}
+    }
 
+    private void showRecipeDataView() {
+        mErrorMessageDisplay.setVisibility(View.INVISIBLE);
+        mRecyclerView.setVisibility(View.VISIBLE);
+    }
+
+    // his method will make the error message visible and hide the recipe View.
+    private void showErrorMessage() {
+        mRecyclerView.setVisibility(View.INVISIBLE);
+        mErrorMessageDisplay.setVisibility(View.VISIBLE);
+    }
+}

@@ -16,7 +16,7 @@ import com.example.bakingapp.model.Step;
 
 import java.util.ArrayList;
 
-import static com.example.bakingapp.MainActivity.INGREDIENTS_ID;
+//import static com.example.bakingapp.MainActivity.INGREDIENTS_ID;
 
 public class DetailActivity extends AppCompatActivity
         /* implements StepAdapter.StepAdapterOnClickHandler*/ {
