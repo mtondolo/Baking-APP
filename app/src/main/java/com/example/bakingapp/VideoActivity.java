@@ -209,8 +209,8 @@ public class VideoActivity extends AppCompatActivity implements ExoPlayer.EventL
             initializePlayer(Uri.parse(mStep.getVideoURL()));
         }
 
-        String rating = mStep.getDescription();
-        mStepDescriptionTextView.setText(rating);
+       /* String rating = mStep.getDescription();
+        mStepDescriptionTextView.setText(rating);*/
     }
 
     @Override
