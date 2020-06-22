@@ -27,9 +27,10 @@ import java.util.List;
 
 // This fragment displays all of the recipes in one large list
 // The list appears as a list of images
-public class MasterListFragment extends Fragment implements RecipeAdapter.RecipeAdapterOnClickHandler{
+public class MasterListFragment extends Fragment implements RecipeAdapter.RecipeAdapterOnClickHandler {
 
-    private static final String INGREDIENTS_ID = "com.example.bakingapp.STEP_LIST_ID";;
+    private static final String INGREDIENTS_ID = "com.example.bakingapp.STEP_LIST_ID";
+    ;
     private RecyclerView mRecyclerView;
     private RecipeAdapter mRecipeAdapter;
     private TextView mErrorMessageDisplay;
@@ -63,7 +64,7 @@ public class MasterListFragment extends Fragment implements RecipeAdapter.Recipe
         // Use setHasFixedSize(true) on mRecyclerView to designate that all items in the list will have the same size.
         mRecyclerView.setHasFixedSize(true);
 
-        mRecipeAdapter = new RecipeAdapter(getActivity());
+        mRecipeAdapter = new RecipeAdapter(this);
 
         // Set the adapter on the GridView
         mRecyclerView.setAdapter(mRecipeAdapter);
@@ -76,7 +77,7 @@ public class MasterListFragment extends Fragment implements RecipeAdapter.Recipe
 
     }
 
-@Override
+    @Override
     public void onClick(Recipe recipe) {
         Class destinationActivity = DetailActivity.class;
         Intent intentToStartDetailActivity = new Intent(getContext(), destinationActivity);

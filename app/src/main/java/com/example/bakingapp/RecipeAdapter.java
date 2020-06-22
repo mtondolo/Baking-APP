@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bakingapp.model.Recipe;
@@ -18,7 +17,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     private List<Recipe> mRecipe;
 
     // An on-click handler that we've defined to make it easy for an Activity to interface with our RecyclerView
-    private final FragmentActivity mClickHandler;
+    private final RecipeAdapterOnClickHandler mClickHandler;
 
     // The interface that receives onClick messages
     public interface RecipeAdapterOnClickHandler {
@@ -26,7 +25,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     }
 
     // Creates a RecipeAdapter
-    public RecipeAdapter(FragmentActivity clickHandler) {
+    public RecipeAdapter(RecipeAdapterOnClickHandler clickHandler) {
         mClickHandler = clickHandler;
     }
 
@@ -77,6 +76,10 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
             int adapterPosition = getAdapterPosition();
             Recipe recipe = mRecipe.get(adapterPosition);
             //mClickHandler.onClick(recipe);
+
+            if (mClickHandler != null) {
+                mClickHandler.onClick(recipe);
+            }
         }
     }
 
@@ -85,4 +88,5 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         mRecipe = recipe;
         notifyDataSetChanged();
     }
+
 }
