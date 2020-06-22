@@ -18,6 +18,8 @@ import com.example.bakingapp.model.Step;
 
 import java.util.ArrayList;
 
+import static com.example.bakingapp.MainActivity.INGREDIENTS_ID;
+
 public class RecipePartFragment extends Fragment implements StepAdapter.StepAdapterOnClickHandler {
 
     private StepAdapter mStepAdapter;
@@ -40,7 +42,7 @@ public class RecipePartFragment extends Fragment implements StepAdapter.StepAdap
         View rootView = inflater.inflate(R.layout.fragment_recipe_part, container, false);
         TextView ingredientsTextView = (TextView) rootView.findViewById(R.id.ingredient_part_text_view);
         ingredientsTextView.setText("Ingredients");
-     /*   ingredientsTextView.setOnClickListener(new View.OnClickListener() {
+        ingredientsTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intentToStartIngredientsActivity = new Intent(getContext(), IngredientsActivity.class);
@@ -53,7 +55,7 @@ public class RecipePartFragment extends Fragment implements StepAdapter.StepAdap
 
                 startActivity(intentToStartIngredientsActivity);
             }
-        });*/
+        });
 
         mRecyclerView = rootView.findViewById(R.id.steps_part_recyclerview);
 

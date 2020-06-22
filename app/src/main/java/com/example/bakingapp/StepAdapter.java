@@ -17,18 +17,15 @@ import java.util.ArrayList;
 public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepViewHolder> {
     private ArrayList<Parcelable> mStep;
 
-    //private RecipePartFragment mRecipePartFragment;
     final private StepAdapterOnClickHandler mClickHandler;
 
     public interface StepAdapterOnClickHandler {
         void onStepItemClick(Step clickedStepItem);
     }
 
-    public StepAdapter(ArrayList<Parcelable> steps, StepAdapterOnClickHandler clickHandler
-            /*, RecipePartFragment recipePartFragment*/) {
+    public StepAdapter(ArrayList<Parcelable> steps, StepAdapterOnClickHandler clickHandler) {
         mStep = steps;
         mClickHandler = clickHandler;
-        //mRecipePartFragment = recipePartFragment;
     }
 
 

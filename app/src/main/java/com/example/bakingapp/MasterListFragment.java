@@ -24,13 +24,13 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.bakingapp.MainActivity.INGREDIENTS_ID;
+
 
 // This fragment displays all of the recipes in one large list
 // The list appears as a list of images
 public class MasterListFragment extends Fragment implements RecipeAdapter.RecipeAdapterOnClickHandler {
 
-    private static final String INGREDIENTS_ID = "com.example.bakingapp.STEP_LIST_ID";
-    ;
     private RecyclerView mRecyclerView;
     private RecipeAdapter mRecipeAdapter;
     private TextView mErrorMessageDisplay;
@@ -40,7 +40,7 @@ public class MasterListFragment extends Fragment implements RecipeAdapter.Recipe
     public MasterListFragment() {
     }
 
-    // Inflates the GridView of all AndroidMe images
+    // Inflates the Recyclerview of all recipes
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -66,15 +66,14 @@ public class MasterListFragment extends Fragment implements RecipeAdapter.Recipe
 
         mRecipeAdapter = new RecipeAdapter(this);
 
-        // Set the adapter on the GridView
+        // Set the adapter on the Recyclerview
         mRecyclerView.setAdapter(mRecipeAdapter);
 
-        /* Once all of our views are setup, we can load the recipe data. */
+        // Once all of our views are setup, we can load the recipe data.
         loadRecipeData();
 
         // Return the root view
         return rootView;
-
     }
 
     @Override

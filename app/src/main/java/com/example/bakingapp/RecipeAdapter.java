@@ -75,8 +75,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         public void onClick(View v) {
             int adapterPosition = getAdapterPosition();
             Recipe recipe = mRecipe.get(adapterPosition);
-            //mClickHandler.onClick(recipe);
-
             if (mClickHandler != null) {
                 mClickHandler.onClick(recipe);
             }

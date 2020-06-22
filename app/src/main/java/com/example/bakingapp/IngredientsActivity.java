@@ -15,9 +15,6 @@ import java.util.ArrayList;
 
 public class IngredientsActivity extends AppCompatActivity {
 
-    private Ingredients mIngredients;
-    private TextView mIngredientsDetailsTextView;
-
     private RecyclerView mIngredientsRecyclerView;
     private IngredientsAdapter mIngredientsAdapter;
 
