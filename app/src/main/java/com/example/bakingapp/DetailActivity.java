@@ -19,7 +19,7 @@ public class DetailActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
 
         fragmentManager.beginTransaction()
-                .add(R.id.ingredients_container, ingredientFragment)
+                .add(R.id.ingredients_tv_container, ingredientFragment)
                 .commit();
 
         // Create a new steps RecipePartFragment

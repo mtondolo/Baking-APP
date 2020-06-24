@@ -15,7 +15,7 @@
         app:cardUseCompatPadding="true"
         app:contentPadding="16dp">
         <FrameLayout
-            android:id="@+id/ingredients_container"
+            android:id="@+id/ingredients_tv_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"/>

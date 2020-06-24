@@ -1,6 +1,7 @@
 package com.example.bakingapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,22 +24,14 @@ public class IngredientsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ingredients);
 
-        // Display the recipe that was passed from MainActivity
-        final Intent intentThatStartedThisActivity = getIntent();
+        // Create a new ingredient RecipePartFragment
+        IngredientsFragment ingredientFragment = new IngredientsFragment();
 
-        // Load the step data.
-        ArrayList<Parcelable> ingredientsList = intentThatStartedThisActivity.getParcelableArrayListExtra(Intent.EXTRA_TEXT);
+        // Add the fragment to its container using a FragmentManager and a Transaction
+        FragmentManager fragmentManager = getSupportFragmentManager();
 
-        mIngredientsRecyclerView = findViewById(R.id.recyclerview_ingredients);
-
-        // LinearLayoutManager can support HORIZONTAL or VERTICAL orientations.
-        LinearLayoutManager layoutManager
-                = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        mIngredientsRecyclerView.setLayoutManager(layoutManager);
-        mIngredientsRecyclerView.setHasFixedSize(true);
-
-        mIngredientsAdapter = new IngredientsAdapter(ingredientsList);
-
-        mIngredientsRecyclerView.setAdapter(mIngredientsAdapter);
+        fragmentManager.beginTransaction()
+                .add(R.id.ingredients_list_container, ingredientFragment)
+                .commit();
     }
 }
