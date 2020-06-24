@@ -39,7 +39,7 @@ public class DetailFragment extends Fragment implements StepAdapter.StepAdapterO
                 .getParcelableArrayListExtra(Intent.EXTRA_TEXT);
 
         View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
-        TextView ingredientsTextView = (TextView) rootView.findViewById(R.id.ingredient_part_text_view);
+        TextView ingredientsTextView = (TextView) rootView.findViewById(R.id.ingredient_text_view);
         ingredientsTextView.setText("Ingredients");
         ingredientsTextView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,7 +56,7 @@ public class DetailFragment extends Fragment implements StepAdapter.StepAdapterO
             }
         });
 
-        mRecyclerView = rootView.findViewById(R.id.steps_part_recyclerview);
+        mRecyclerView = rootView.findViewById(R.id.steps_recyclerview);
 
         LinearLayoutManager layoutManager
                 = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
