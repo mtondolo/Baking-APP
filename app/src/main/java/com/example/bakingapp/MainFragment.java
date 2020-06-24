@@ -29,7 +29,7 @@ import static com.example.bakingapp.MainActivity.INGREDIENTS_ID;
 
 // This fragment displays all of the recipes in one large list
 // The list appears as a list of images
-public class MasterListFragment extends Fragment implements RecipeAdapter.RecipeAdapterOnClickHandler {
+public class MainFragment extends Fragment implements RecipeAdapter.RecipeAdapterOnClickHandler {
 
     private RecyclerView mRecyclerView;
     private RecipeAdapter mRecipeAdapter;
@@ -37,16 +37,16 @@ public class MasterListFragment extends Fragment implements RecipeAdapter.Recipe
     private ProgressBar mLoadingIndicator;
 
     // Mandatory empty constructor
-    public MasterListFragment() {
+    public MainFragment() {
     }
 
     // Inflates the Recyclerview of all recipes
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View rootView = inflater.inflate(R.layout.fragment_master_list, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
-        // Get a reference to the recyclerview in the fragment_master_list xml layout file
+        // Get a reference to the recyclerview in the fragment_main xml layout file
         //GridView gridView = (GridView) rootView.findViewById(R.id.images_grid_view);
         mRecyclerView = rootView.findViewById(R.id.recyclerview_recipe);
 

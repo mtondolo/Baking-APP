@@ -1,7 +1,6 @@
 package com.example.bakingapp;
 
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -20,13 +19,13 @@ import java.util.ArrayList;
 
 import static com.example.bakingapp.MainActivity.INGREDIENTS_ID;
 
-public class RecipePartFragment extends Fragment implements StepAdapter.StepAdapterOnClickHandler {
+public class DetailFragment extends Fragment implements StepAdapter.StepAdapterOnClickHandler {
 
     private StepAdapter mStepAdapter;
     private RecyclerView mRecyclerView;
 
     // Mandatory empty constructor for the fragment manager to instantiate the fragment
-    public RecipePartFragment() {
+    public DetailFragment() {
     }
 
     // Inflates the fragment layout file
@@ -39,7 +38,7 @@ public class RecipePartFragment extends Fragment implements StepAdapter.StepAdap
         ArrayList<Parcelable> stepsList = intentThatStartedThisActivity
                 .getParcelableArrayListExtra(Intent.EXTRA_TEXT);
 
-        View rootView = inflater.inflate(R.layout.fragment_recipe_part, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
         TextView ingredientsTextView = (TextView) rootView.findViewById(R.id.ingredient_part_text_view);
         ingredientsTextView.setText("Ingredients");
         ingredientsTextView.setOnClickListener(new View.OnClickListener() {
