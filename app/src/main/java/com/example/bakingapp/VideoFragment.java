@@ -84,6 +84,20 @@ public class VideoFragment extends Fragment implements ExoPlayer.EventListener {
         return rootView;
     }
 
+    private void populateUI() {
+        // Initialize the Media Session.
+        initializeMediaSession();
+
+        // Initialize the player.
+        String mediaUri = mStep.getVideoURL();
+        if (mediaUri != null) {
+            initializePlayer(Uri.parse(mStep.getVideoURL()));
+        }
+
+       /* String rating = mStep.getDescription();
+        mStepDescriptionTextView.setText(rating);*/
+    }
+
     /**
      * Shows Media Style notification, with an action that depends on the current MediaSession
      * PlaybackState.
@@ -208,21 +222,6 @@ public class VideoFragment extends Fragment implements ExoPlayer.EventListener {
         super.onDestroy();
         releasePlayer();
         mMediaSession.setActive(false);
-    }
-
-
-    private void populateUI() {
-        // Initialize the Media Session.
-        initializeMediaSession();
-
-        // Initialize the player.
-        String mediaUri = mStep.getVideoURL();
-        if (mediaUri != null) {
-            initializePlayer(Uri.parse(mStep.getVideoURL()));
-        }
-
-       /* String rating = mStep.getDescription();
-        mStepDescriptionTextView.setText(rating);*/
     }
 
     @Override
