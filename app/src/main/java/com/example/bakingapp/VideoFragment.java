@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,6 +57,7 @@ public class VideoFragment extends Fragment implements ExoPlayer.EventListener {
     private static MediaSessionCompat mMediaSession;
     private PlaybackStateCompat.Builder mStateBuilder;
     private NotificationManager mNotificationManager;
+    private String mediaUri;
 
     // Mandatory empty constructor for the fragment manager to instantiate the fragment
     public VideoFragment() {
@@ -89,7 +91,7 @@ public class VideoFragment extends Fragment implements ExoPlayer.EventListener {
         initializeMediaSession();
 
         // Initialize the player.
-        String mediaUri = mStep.getVideoURL();
+        //mediaUri = mStep.getVideoURL();
         if (mediaUri != null) {
             initializePlayer(Uri.parse(mStep.getVideoURL()));
         }

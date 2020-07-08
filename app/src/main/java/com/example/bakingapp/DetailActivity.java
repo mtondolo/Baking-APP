@@ -4,8 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
-public class DetailActivity extends AppCompatActivity {
+import com.example.bakingapp.model.Step;
+
+public class DetailActivity extends AppCompatActivity  {
     // Track whether to display a two-pane or single-pane UI
     // A single-pane display refers to phone screens, and two-pane to larger tablet screens
     private boolean mTwoPane;
@@ -39,6 +42,13 @@ public class DetailActivity extends AppCompatActivity {
                         .add(R.id.steps_container, stepsFragment)
                         .commit();
 
+
+                VideoFragment videoFragment = new VideoFragment();
+
+                fragmentManager.beginTransaction()
+                        .add(R.id.video_container, videoFragment)
+                        .commit();
+
             }
         } else {
             mTwoPane = false;
@@ -60,5 +70,4 @@ public class DetailActivity extends AppCompatActivity {
                     .commit();
         }
     }
-
 }
