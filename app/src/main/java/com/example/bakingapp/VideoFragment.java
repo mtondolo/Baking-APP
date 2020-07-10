@@ -91,7 +91,7 @@ public class VideoFragment extends Fragment implements ExoPlayer.EventListener {
         initializeMediaSession();
 
         // Initialize the player.
-        //mediaUri = mStep.getVideoURL();
+        mediaUri = mStep.getVideoURL();
         if (mediaUri != null) {
             initializePlayer(Uri.parse(mStep.getVideoURL()));
         }
