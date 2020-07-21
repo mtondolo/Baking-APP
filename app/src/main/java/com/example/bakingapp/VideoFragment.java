@@ -80,13 +80,20 @@ public class VideoFragment extends Fragment implements ExoPlayer.EventListener {
         mStep = intent.getParcelableExtra(Intent.EXTRA_TEXT);
         if (intent != null) {
             if (intent.hasExtra(Intent.EXTRA_TEXT)) {
-                populateUI();
+                //populateUI();
+                initializeMediaSession();
+
+                // Initialize the player.
+                mediaUri = mStep.getVideoURL();
+                if (mediaUri != null) {
+                    initializePlayer(Uri.parse(mStep.getVideoURL()));
+                }
             }
         }
         return rootView;
     }
 
-    private void populateUI() {
+    /*private void populateUI() {
         // Initialize the Media Session.
         initializeMediaSession();
 
@@ -96,9 +103,9 @@ public class VideoFragment extends Fragment implements ExoPlayer.EventListener {
             initializePlayer(Uri.parse(mStep.getVideoURL()));
         }
 
-       /* String rating = mStep.getDescription();
-        mStepDescriptionTextView.setText(rating);*/
-    }
+       *//* String rating = mStep.getDescription();
+        mStepDescriptionTextView.setText(rating);*//*
+    }*/
 
     /**
      * Shows Media Style notification, with an action that depends on the current MediaSession
