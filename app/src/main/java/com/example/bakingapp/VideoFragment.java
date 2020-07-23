@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.text.TextUtils;
@@ -42,9 +43,11 @@ import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 
+import java.util.ArrayList;
 import java.util.prefs.Preferences;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
+import static com.example.bakingapp.DetailActivity.STEP_LIST_ID;
 
 public class VideoFragment extends Fragment implements ExoPlayer.EventListener {
 
@@ -70,6 +73,8 @@ public class VideoFragment extends Fragment implements ExoPlayer.EventListener {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+
+        ArrayList<Parcelable> stepsList = getArguments().getParcelableArrayList(STEP_LIST_ID);
 
         View rootView = inflater.inflate(R.layout.fragment_video, container, false);
 
