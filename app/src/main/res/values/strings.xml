@@ -6,4 +6,6 @@
     <string name="restart">Restart</string>
     <string name="step_video">Step Video</string>
     <string name="notification_text">Press play to see the video!</string>
+    <string name="pref_two_pane_key" translatable="false">two_pane</string>
+    <string name="pref_pane_status_flag">pane_status_flag</string>
 </resources>

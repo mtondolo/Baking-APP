@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.example.bakingapp.model.Step;
+import com.example.bakingapp.model.StepsPreferences;
 
 public class DetailActivity extends AppCompatActivity  {
     // Track whether to display a two-pane or single-pane UI
@@ -22,6 +23,7 @@ public class DetailActivity extends AppCompatActivity  {
         if (findViewById(R.id.detail_linear_layout) != null) {
             // This LinearLayout will only initially exist in the two-pane tablet case
             mTwoPane = true;
+            StepsPreferences.savePaneStatus(getApplicationContext(), mTwoPane);
 
             if (savedInstanceState == null) {
 

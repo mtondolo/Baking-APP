@@ -23,6 +23,7 @@ import androidx.fragment.app.Fragment;
 import androidx.media.session.MediaButtonReceiver;
 
 import com.example.bakingapp.model.Step;
+import com.example.bakingapp.model.StepsPreferences;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.ExoPlayer;
@@ -40,6 +41,8 @@ import com.google.android.exoplayer2.trackselection.TrackSelector;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
+
+import java.util.prefs.Preferences;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
 
@@ -70,6 +73,7 @@ public class VideoFragment extends Fragment implements ExoPlayer.EventListener {
 
         View rootView = inflater.inflate(R.layout.fragment_video, container, false);
 
+
         // Initialize the player view.
         mPlayerView = rootView.findViewById(R.id.playerView);
 
@@ -78,18 +82,42 @@ public class VideoFragment extends Fragment implements ExoPlayer.EventListener {
 
         Intent intent = getActivity().getIntent();
         mStep = intent.getParcelableExtra(Intent.EXTRA_TEXT);
-        if (intent != null) {
-            if (intent.hasExtra(Intent.EXTRA_TEXT)) {
-                //populateUI();
-                initializeMediaSession();
 
-                // Initialize the player.
-                mediaUri = mStep.getVideoURL();
-                if (mediaUri != null) {
-                    initializePlayer(Uri.parse(mStep.getVideoURL()));
+        boolean isTwoPane = StepsPreferences.getPaneStatus(getContext());
+        initializeMediaSession();
+
+        if (!isTwoPane) {
+            if (intent != null) {
+                if (intent.hasExtra(Intent.EXTRA_TEXT)) {
+                    mediaUri = mStep.getVideoURL();
+                    if (mediaUri != null) {
+                        initializePlayer(Uri.parse(mStep.getVideoURL()));
+                    }
                 }
             }
+        } else {
+            String staticMediaUri =
+                    "https://d17h27t6h515a5.cloudfront.net/topher/2017/April/58ffd974_-intro-creampie/-intro-creampie.mp4";
+
+            initializePlayer(Uri.parse(staticMediaUri));
         }
+
+        /*if (intent != null) {
+            if (intent.hasExtra(Intent.EXTRA_TEXT)) {
+                //populateUI();
+                // Initialize the player.
+                initializeMediaSession();
+                mediaUri = mStep.getVideoURL();
+                if (mediaUri != null *//*!isTwoPane*//*) {
+                    initializePlayer(Uri.parse(mStep.getVideoURL()));
+                } else if(isTwoPane){
+                    mediaUri =
+                            "https://d17h27t6h515a5.cloudfront.net/topher/2017/April/58ffd974_-intro-creampie/-intro-creampie.mp4";
+                    initializePlayer(Uri.parse(mediaUri));
+
+                }
+            }
+        }*/
         return rootView;
     }
 
