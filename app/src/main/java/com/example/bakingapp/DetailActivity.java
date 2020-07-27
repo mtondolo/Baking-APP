@@ -59,6 +59,7 @@ public class DetailActivity extends AppCompatActivity {
 
 
                 VideoFragment videoFragment = new VideoFragment();
+
                 Bundle bundle = new Bundle();
                 bundle.putParcelableArrayList(STEP_LIST_ID, stepsList);
                 videoFragment.setArguments(bundle);

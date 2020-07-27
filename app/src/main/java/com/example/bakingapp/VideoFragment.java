@@ -64,6 +64,7 @@ public class VideoFragment extends Fragment implements ExoPlayer.EventListener {
     private PlaybackStateCompat.Builder mStateBuilder;
     private NotificationManager mNotificationManager;
     private String mediaUri;
+    private ArrayList<Parcelable> stepsList;
 
     // Mandatory empty constructor for the fragment manager to instantiate the fragment
     public VideoFragment() {
@@ -74,10 +75,7 @@ public class VideoFragment extends Fragment implements ExoPlayer.EventListener {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        ArrayList<Parcelable> stepsList = getArguments().getParcelableArrayList(STEP_LIST_ID);
-
         View rootView = inflater.inflate(R.layout.fragment_video, container, false);
-
 
         // Initialize the player view.
         mPlayerView = rootView.findViewById(R.id.playerView);
@@ -90,8 +88,14 @@ public class VideoFragment extends Fragment implements ExoPlayer.EventListener {
 
         boolean isTwoPane = StepsPreferences.getPaneStatus(getContext());
         initializeMediaSession();
-
-        if (!isTwoPane) {
+        if (isTwoPane) {
+            stepsList = getArguments().getParcelableArrayList(STEP_LIST_ID);
+            for (int i = 0; i == 0; i++) {
+                mStep = (Step) stepsList.get(i);
+                String videoURL = mStep.getVideoURL();
+                initializePlayer(Uri.parse(videoURL));
+            }
+        } else {
             if (intent != null) {
                 if (intent.hasExtra(Intent.EXTRA_TEXT)) {
                     mediaUri = mStep.getVideoURL();
@@ -100,45 +104,9 @@ public class VideoFragment extends Fragment implements ExoPlayer.EventListener {
                     }
                 }
             }
-        } else {
-            String staticMediaUri =
-                    "https://d17h27t6h515a5.cloudfront.net/topher/2017/April/58ffd974_-intro-creampie/-intro-creampie.mp4";
-
-            initializePlayer(Uri.parse(staticMediaUri));
         }
-
-        /*if (intent != null) {
-            if (intent.hasExtra(Intent.EXTRA_TEXT)) {
-                //populateUI();
-                // Initialize the player.
-                initializeMediaSession();
-                mediaUri = mStep.getVideoURL();
-                if (mediaUri != null *//*!isTwoPane*//*) {
-                    initializePlayer(Uri.parse(mStep.getVideoURL()));
-                } else if(isTwoPane){
-                    mediaUri =
-                            "https://d17h27t6h515a5.cloudfront.net/topher/2017/April/58ffd974_-intro-creampie/-intro-creampie.mp4";
-                    initializePlayer(Uri.parse(mediaUri));
-
-                }
-            }
-        }*/
         return rootView;
     }
-
-    /*private void populateUI() {
-        // Initialize the Media Session.
-        initializeMediaSession();
-
-        // Initialize the player.
-        mediaUri = mStep.getVideoURL();
-        if (mediaUri != null) {
-            initializePlayer(Uri.parse(mStep.getVideoURL()));
-        }
-
-       *//* String rating = mStep.getDescription();
-        mStepDescriptionTextView.setText(rating);*//*
-    }*/
 
     /**
      * Shows Media Style notification, with an action that depends on the current MediaSession
